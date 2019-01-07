@@ -4,7 +4,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <OutputType>Exe</OutputType>
     <RootNamespace>Xunit.ConsoleClient</RootNamespace>
-    <TargetFrameworks>net452;net46;net461;net462;net47;net471;net472;netcoreapp1.0;netcoreapp2.0</TargetFrameworks>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,5 +31,16 @@
     <AssemblyName>xunit.console.x86</AssemblyName>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+
+  <!-- Support for building net472 assemblies on non-Windows machines -->
+  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' AND '$(TargetFramework)'== 'net472' ">
+    <FrameworkPathOverride>$(NuGetPackageRoot)microsoft.targetingpack.netframework.v4.7.2/1.0.0/lib/net472/</FrameworkPathOverride>
+    <RestoreAdditionalProjectSources>https://dotnet.myget.org/F/dotnet-core/api/v3/index.json</RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(OS)' != 'Windows_NT' AND '$(TargetFramework)'== 'net472' ">
+    <PackageReference Include="Microsoft.TargetingPack.NETFramework.v4.7.2" Version="1.0.0" ExcludeAssets="All" PrivateAssets="All" />
+    <Reference Include="netstandard" />
+  </ItemGroup>
 
 </Project>

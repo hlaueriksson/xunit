@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);XUNIT_FRAMEWORK</DefineConstants>
-    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +14,11 @@
     <Compile Include="..\..\src\common\TestOptionsNames.cs" LinkBase="Common" />
     <Compile Include="..\..\src\common\XunitSerializationInfo.cs" LinkBase="Common" />
   </ItemGroup>
+
+  <!-- Support for building net472 assemblies on non-Windows machines -->
+  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
+    <FrameworkPathOverride>$(NuGetPackageRoot)microsoft.targetingpack.netframework.v4.7.2/1.0.0/lib/net472/</FrameworkPathOverride>
+    <RestoreAdditionalProjectSources>https://dotnet.myget.org/F/dotnet-core/api/v3/index.json</RestoreAdditionalProjectSources>
+  </PropertyGroup>
 
 </Project>

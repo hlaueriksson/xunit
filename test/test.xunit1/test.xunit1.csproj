@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFramework>net45</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,8 +14,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.XML" />
     <Reference Include="System.Web" />
     <Reference Include="$(NuGetPackageRoot)xunit\1.9.2\lib\net20\xunit.runner.utility.dll" />
+  </ItemGroup>
+
+  <!-- Support for building net45 assemblies on non-Windows machines -->
+  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
+    <FrameworkPathOverride>$(NuGetPackageRoot)microsoft.targetingpack.netframework.v4.5/1.0.1/lib/net45/</FrameworkPathOverride>
+    <RestoreAdditionalProjectSources>https://dotnet.myget.org/F/dotnet-core/api/v3/index.json</RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(OS)' != 'Windows_NT' ">
+    <PackageReference Include="Microsoft.TargetingPack.NETFramework.v4.5" Version="1.0.1" ExcludeAssets="All" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
